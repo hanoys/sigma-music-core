@@ -4,12 +4,12 @@ import (
 	"context"
 	"errors"
 	"github.com/google/uuid"
-	mocks2 "github.com/hanoys/sigma-music/internal/adapters/auth/mocks"
-	mocks3 "github.com/hanoys/sigma-music/internal/adapters/hash/mocks"
-	"github.com/hanoys/sigma-music/internal/adapters/repository/mocks"
-	"github.com/hanoys/sigma-music/internal/domain"
-	"github.com/hanoys/sigma-music/internal/ports"
-	"github.com/hanoys/sigma-music/internal/service"
+	"github.com/hanoys/sigma-music-core/domain"
+	"github.com/hanoys/sigma-music-core/ports"
+	"github.com/hanoys/sigma-music-core/service"
+	mocks2 "github.com/hanoys/sigma-music-core/service/test/mocks/auth"
+	mocks3 "github.com/hanoys/sigma-music-core/service/test/mocks/hash"
+	"github.com/hanoys/sigma-music-core/service/test/mocks/repository"
 	"testing"
 )
 

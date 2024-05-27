@@ -3,11 +3,10 @@ package test
 import (
 	"context"
 	"errors"
-	"github.com/hanoys/sigma-music/internal/adapters/hash"
-	"github.com/hanoys/sigma-music/internal/adapters/repository/mocks"
-	"github.com/hanoys/sigma-music/internal/domain"
-	"github.com/hanoys/sigma-music/internal/ports"
-	"github.com/hanoys/sigma-music/internal/service"
+	"github.com/hanoys/sigma-music-core/domain"
+	"github.com/hanoys/sigma-music-core/ports"
+	"github.com/hanoys/sigma-music-core/service"
+	"github.com/hanoys/sigma-music-core/service/test/mocks/repository"
 	"github.com/stretchr/testify/mock"
 	"testing"
 )

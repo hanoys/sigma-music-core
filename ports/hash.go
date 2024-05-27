@@ -1,6 +1,6 @@
 package ports
 
-import "github.com/hanoys/sigma-music/internal/domain"
+import "github.com/hanoys/sigma-music-core/domain"
 
 type IHashPasswordProvider interface {
 	EncodePassword(password string) domain.SaltedPassword

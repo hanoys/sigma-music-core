@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 	"github.com/google/uuid"
-	"github.com/hanoys/sigma-music/internal/domain"
-	"github.com/hanoys/sigma-music/internal/ports"
+	"github.com/hanoys/sigma-music-core/domain"
+	"github.com/hanoys/sigma-music-core/ports"
 	"go.uber.org/zap"
 	"strings"
 )

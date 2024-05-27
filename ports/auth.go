@@ -3,7 +3,7 @@ package ports
 import (
 	"context"
 	"errors"
-	"github.com/hanoys/sigma-music/internal/domain"
+	"github.com/hanoys/sigma-music-core/domain"
 )
 
 var (
