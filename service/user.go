@@ -10,11 +10,11 @@ import (
 
 type UserService struct {
 	repository ports.IUserRepository
-	hash       ports.IHashPasswordProvider
+	hash       ports.IHashPasswordService
 	logger     *zap.Logger
 }
 
-func NewUserService(repo ports.IUserRepository, hash ports.IHashPasswordProvider,
+func NewUserService(repo ports.IUserRepository, hash ports.IHashPasswordService,
 	logger *zap.Logger) *UserService {
 	return &UserService{
 		repository: repo,

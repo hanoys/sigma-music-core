@@ -10,11 +10,11 @@ import (
 
 type MusicianService struct {
 	repository ports.IMusicianRepository
-	hash       ports.IHashPasswordProvider
+	hash       ports.IHashPasswordService
 	logger     *zap.Logger
 }
 
-func NewMusicianService(repo ports.IMusicianRepository, hash ports.IHashPasswordProvider,
+func NewMusicianService(repo ports.IMusicianRepository, hash ports.IHashPasswordService,
 	logger *zap.Logger) *MusicianService {
 	return &MusicianService{
 		repository: repo,

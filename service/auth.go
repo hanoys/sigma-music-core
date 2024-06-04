@@ -14,12 +14,12 @@ type AuthorizationService struct {
 	userRepository     ports.IUserRepository
 	musicianRepository ports.IMusicianRepository
 	tokenProvider      ports.ITokenProvider
-	hash               ports.IHashPasswordProvider
+	hash               ports.IHashPasswordService
 	logger             *zap.Logger
 }
 
 func NewAuthorizationService(userRepo ports.IUserRepository, musicianRepo ports.IMusicianRepository,
-	tokenProvider ports.ITokenProvider, hash ports.IHashPasswordProvider, logger *zap.Logger) *AuthorizationService {
+	tokenProvider ports.ITokenProvider, hash ports.IHashPasswordService, logger *zap.Logger) *AuthorizationService {
 	return &AuthorizationService{
 		userRepository:     userRepo,
 		musicianRepository: musicianRepo,

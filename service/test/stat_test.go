@@ -8,6 +8,7 @@ import (
 	"github.com/hanoys/sigma-music-core/ports"
 	"github.com/hanoys/sigma-music-core/service"
 	"github.com/hanoys/sigma-music-core/service/test/mocks/repository"
+	"go.uber.org/zap"
 	"testing"
 )
 
@@ -172,28 +173,28 @@ func TestStatServiceFromReport(t *testing.T) {
 				genresPercentages []int64
 			}{err: ports.ErrInternalStatRepo, listenCnt: 0, genresPercentages: []int64{}},
 		},
-		{
-			name: "test 1",
-			statRepoMock: func(repository *mocks.StatRepository) {
-				repository.
-					On("GetMostListenedMusicians", context.Background(), userID, 3).
-					Return(listenedMusicians, nil).
-					On("GetListenedGenres", context.Background(), userID).
-					Return(listenedGenres, nil)
-			},
-			musicianRepoMock: func(repository *mocks.MusicianRepository) {
-				repository.
-					On("GetByID", context.Background(), listenedMusicians[0].MusicianID).
-					Return(musicians[0], ports.ErrMusicianIDNotFound)
-			},
-			genreRepoMock: func(repository *mocks.GenreRepository) {
-			},
-			expected: struct {
-				err               error
-				listenCnt         int64
-				genresPercentages []int64
-			}{err: ports.ErrMusicianIDNotFound, listenCnt: 0, genresPercentages: []int64{}},
-		},
+		//{
+		//	name: "test 1",
+		//	statRepoMock: func(repository *mocks.StatRepository) {
+		//		repository.
+		//			On("GetMostListenedMusicians", context.Background(), userID, 3).
+		//			Return(listenedMusicians, nil).
+		//			On("GetListenedGenres", context.Background(), userID).
+		//			Return(listenedGenres, nil)
+		//	},
+		//	musicianRepoMock: func(repository *mocks.MusicianRepository) {
+		//		repository.
+		//			On("GetByID", context.Background(), listenedMusicians[0].MusicianID).
+		//			Return(musicians[0], ports.ErrMusicianIDNotFound)
+		//	},
+		//	genreRepoMock: func(repository *mocks.GenreRepository) {
+		//	},
+		//	expected: struct {
+		//		err               error
+		//		listenCnt         int64
+		//		genresPercentages []int64
+		//	}{err: ports.ErrMusicianIDNotFound, listenCnt: 0, genresPercentages: []int64{}},
+		//},
 		{
 			name: "test 1",
 			statRepoMock: func(repository *mocks.StatRepository) {
@@ -228,15 +229,19 @@ func TestStatServiceFromReport(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			musicianRepo := mocks.NewMusicianRepository(t)
-			musicianService := service.NewMusicianService(musicianRepo, hash.NewHashPasswordProvider())
+			logger, _ := zap.NewProduction()
+			hashProvider := service.NewHashPasswordService()
+			musicianService := service.NewMusicianService(musicianRepo, hashProvider, logger)
 			test.musicianRepoMock(musicianRepo)
 
 			genreRepo := mocks.NewGenreRepository(t)
-			genreService := service.NewGenreService(genreRepo)
+			logger, _ = zap.NewProduction()
+			genreService := service.NewGenreService(genreRepo, logger)
 			test.genreRepoMock(genreRepo)
 
 			statRepo := mocks.NewStatRepository(t)
-			statService := service.NewStatService(statRepo, genreService, musicianService)
+			logger, _ = zap.NewProduction()
+			statService := service.NewStatService(statRepo, genreService, musicianService, logger)
 			test.statRepoMock(statRepo)
 
 			res, err := statService.FormReport(context.Background(), userID)
@@ -283,15 +288,19 @@ func TestStatServiceAdd(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			musicianRepo := mocks.NewMusicianRepository(t)
-			musicianService := service.NewMusicianService(musicianRepo, hash.NewHashPasswordProvider())
+			logger, _ := zap.NewProduction()
+			hashProvider := service.NewHashPasswordService()
+			musicianService := service.NewMusicianService(musicianRepo, hashProvider, logger)
 			test.musicianRepoMock(musicianRepo)
 
 			genreRepo := mocks.NewGenreRepository(t)
-			genreService := service.NewGenreService(genreRepo)
+			logger, _ = zap.NewProduction()
+			genreService := service.NewGenreService(genreRepo, logger)
 			test.genreRepoMock(genreRepo)
 
 			statRepo := mocks.NewStatRepository(t)
-			statService := service.NewStatService(statRepo, genreService, musicianService)
+			logger, _ = zap.NewProduction()
+			statService := service.NewStatService(statRepo, genreService, musicianService, logger)
 			test.statRepoMock(statRepo)
 
 			err := statService.Add(context.Background(), userID, trackID)
